@@ -6,6 +6,7 @@ import 'package:mediezytech_task/application/radio/radio_bloc.dart';
 import 'package:mediezytech_task/application/register/register_bloc.dart';
 import 'package:mediezytech_task/domain/core/di/injectable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mediezytech_task/infrastructure/core/token/token.dart';
 import 'package:mediezytech_task/presentation/doctor/doctor.dart';
 import 'package:mediezytech_task/presentation/login/login.dart';
 import 'package:mediezytech_task/presentation/register/register.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    String? token = GetLocalStorage.getUserIdAndToken("token");
     return MultiBlocProvider(
         providers: [
           BlocProvider(
@@ -36,7 +38,7 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) => getIt<LoginBloc>(),
           ),
-           BlocProvider(
+          BlocProvider(
             create: (context) => getIt<DoctorBloc>(),
           ),
         ],
@@ -47,7 +49,7 @@ class MyApp extends StatelessWidget {
             useMaterial3: true,
           ),
           debugShowCheckedModeBanner: false,
-          home: Login(),
+          home: token == null ? Login() : Doctor(),
         ));
   }
 }

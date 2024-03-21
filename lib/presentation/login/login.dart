@@ -1,12 +1,15 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mediezytech_task/application/doctor/doctor_bloc.dart';
 import 'package:mediezytech_task/application/login/login_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mediezytech_task/application/radio/radio_bloc.dart';
 import 'package:mediezytech_task/infrastructure/location_service/location.dart';
 import 'package:mediezytech_task/presentation/doctor/doctor.dart';
+import 'package:mediezytech_task/presentation/register/register.dart';
 
 import '../../core/colors.dart';
 import '../../widget/custom_form.dart';
@@ -48,6 +51,36 @@ class Login extends StatelessWidget {
                       textinputType: TextInputType.text,
                       labelText: "Password",
                       hintText: "Password"),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  RichText(
+                    text: TextSpan(
+                        text: "Already Have any Account?",
+                        style: GoogleFonts.inder(
+                            fontSize: 15,
+                            fontWeight: FontWeight.normal,
+                            color: appPrymary),
+                        //   style: white15Bold,
+                        children: [
+                          TextSpan(
+                              text: ' Register',
+                              style: GoogleFonts.inder(
+                                fontSize: 15,
+                                color: appPrymary,
+                                fontWeight: FontWeight.bold,
+                                decoration: TextDecoration.underline,
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Register(),
+                                      ));
+                                })
+                        ]),
+                  ),
                   const SizedBox(
                     height: 10,
                   ),
