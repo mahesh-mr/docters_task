@@ -7,6 +7,7 @@ import 'package:mediezytech_task/application/doctor/doctor_bloc.dart';
 import 'package:mediezytech_task/application/login/login_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mediezytech_task/application/radio/radio_bloc.dart';
+import 'package:mediezytech_task/infrastructure/core/token/token.dart';
 import 'package:mediezytech_task/infrastructure/location_service/location.dart';
 import 'package:mediezytech_task/presentation/doctor/doctor.dart';
 import 'package:mediezytech_task/presentation/register/register.dart';
@@ -48,7 +49,7 @@ class Login extends StatelessWidget {
                   ),
                   CustomFormfeld(
                       controller: passwordController,
-                      textinputType: TextInputType.text,
+                      textinputType: TextInputType.visiblePassword,
                       labelText: "Password",
                       hintText: "Password"),
                   const SizedBox(
@@ -88,25 +89,25 @@ class Login extends StatelessWidget {
                     onTap: () async {
                       bool isValid = fomkey.currentState!.validate();
                       if (isValid) {
-                        BlocProvider.of<LoginBloc>(context)
-                            .add(LoginEvent.started(
-                          email: emailController.text,
-                          password: passwordController.text,
-                        ));
+                        BlocProvider.of<LoginBloc>(context).add(
+                            LoginEvent.started(
+                                email: emailController.text,
+                                password: passwordController.text,
+                                ctx: context));
 
-                        // Position position =
-                        //     await CurrentLocation.determinePosition();
-
-                        // CurrentLocation.GetAddressFromLatLong(
-                        //     position, address!);
-                        // print(address);
+                        // String? token =
+                        //     GetLocalStorage.getUserIdAndToken('token');
+                        // print(token ?? "toekn Null");
                         // BlocProvider.of<DoctorBloc>(context)
                         //     .add(const DoctorEvent.started());
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Doctor(),
-                            ));
+                        // BlocProvider.of<DoctorBloc>(context)
+                        //     .add(const DoctorEvent.started());
+                        // Future.delayed(Duration(seconds: 3))
+                        //     .then((value) => Navigator.push(
+                        //         context,
+                        //         MaterialPageRoute(
+                        //           builder: (context) => Doctor(),
+                        //         )));
                       }
                     },
                     loding: state.isloding,

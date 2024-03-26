@@ -3,9 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:mediezytech_task/application/doctor/doctor_bloc.dart';
 import 'package:mediezytech_task/core/strings.dart';
+import 'package:mediezytech_task/infrastructure/core/token/token.dart';
 import 'package:mediezytech_task/infrastructure/location_service/location.dart';
 import 'package:mediezytech_task/presentation/doctor/widget/doctor_tail.dart';
 import 'package:mediezytech_task/presentation/doctor/widget/home_button.dart';
+import 'package:mediezytech_task/presentation/login/login.dart';
 
 import '../../core/colors.dart';
 
@@ -24,7 +26,8 @@ class _DoctorState extends State<Doctor> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       BlocProvider.of<DoctorBloc>(context).add(const DoctorEvent.started());
     });
-    CurrentLocation.determinePosition();
+    // CurrentLocation.determinePosition();
+      BlocProvider.of<DoctorBloc>(context).add(const DoctorEvent.started());
     super.initState();
   }
 
@@ -34,6 +37,16 @@ class _DoctorState extends State<Doctor> {
       backgroundColor: apphomeBody,
       appBar: AppBar(
         backgroundColor: apphomeBody,
+        leading: IconButton(
+            onPressed: () {
+              GetLocalStorage.removeUserTokenAndUid();
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Login(),
+                  ));
+            },
+            icon: Icon(Icons.logout)),
         actions: const [
           Row(
             children: [
@@ -67,13 +80,6 @@ class _DoctorState extends State<Doctor> {
                 color: appPrymary,
               ),
             );
-            if (state.model == null) {
-              const Center(
-                child: CircularProgressIndicator(
-                  color: appPrymary,
-                ),
-              );
-            }
           }
         },
         builder: (context, state) {
@@ -114,45 +120,42 @@ class _DoctorState extends State<Doctor> {
                                     width: 80,
                                     child: Image.network(
                                       data.docterImage.toString(),
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
                                   const SizedBox(
                                     width: 10,
                                   ),
                                   Expanded(
-                                    child: SizedBox(
-                                      height: 110,
-                                      width: double.infinity,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "Dr ${data.firstname.toString()}, ${data.secondname.toString()}",
-                                            style: black16WBold,
-                                          ),
-                                          Text(
-                                            data.specialization.toString(),
-                                            style: grey14WBold,
-                                          ),
-                                          Text(
-                                            data.mainHospital.toString(),
-                                            style: grey14WBold,
-                                          ),
-                                          Row(
-                                            children: [
-                                              Text(
-                                                "Location : ",
-                                                style: grey14WBold,
-                                              ),
-                                              Text(
-                                                data.location.toString(),
-                                                style: black14Bold,
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Dr ${data.firstname.toString()} ${data.secondname.toString()}",
+                                          style: black16WBold,
+                                        ),
+                                        Text(
+                                          data.specialization.toString(),
+                                          style: grey14WBold,
+                                        ),
+                                        Text(
+                                          data.mainHospital.toString(),
+                                          style: grey14WBold,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              "Location : ",
+                                              style: grey14WBold,
+                                            ),
+                                            Text(
+                                              data.location.toString(),
+                                              style: black14Bold,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
                                     ),
                                   )
                                 ],
@@ -162,8 +165,10 @@ class _DoctorState extends State<Doctor> {
                               "Next Available at",
                               style: black16WBold,
                             ),
-                            Expanded(
+                            SizedBox(
+                              height: 100,
                               child: ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
                                 itemCount: data.clinics!.length,
                                 shrinkWrap: true,
                                 itemBuilder: (context, index) {

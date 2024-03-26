@@ -6,7 +6,7 @@ class GetLocalStorage {
 //save=====================
   static saveToken(Map<String, dynamic> user) {
     storage.write("token", user['token']);
-    storage.write('id', user['id']);
+   // storage.write('id', user['id']);
   }
 
   //Get_User_Details=====================
@@ -18,9 +18,9 @@ class GetLocalStorage {
   removed(String key) {}
 
   //<<<<<Remove_User_Details>>>>>//
-  removeUserTokenAndUid() {
+ static removeUserTokenAndUid() {
     storage.remove("id");
-    storage.remove("token");
+//storage.remove("token");
 
     
     

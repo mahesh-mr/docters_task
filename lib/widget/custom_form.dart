@@ -17,6 +17,7 @@ class CustomFormfeld extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      keyboardType: textinputType,
       controller: controller,
       validator: (value) {
         if (value == null) {

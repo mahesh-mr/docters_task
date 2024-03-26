@@ -1,5 +1,7 @@
+
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mediezytech_task/domain/core/failures/main_failure.dart';
@@ -18,6 +20,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<_Started>((event, emit) async {
       emit(state.copyWith(
         isloding: true,
+      
         registerFaileurOrSuccessOption: none(),
       ));
       print(emit);
@@ -25,6 +28,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           await _loginService.loginService(
         email: event.email,
         password: event.password,
+        ctx:event. ctx,
       );
         print("${loginOption.toString()} ======");
           emit(

@@ -1,11 +1,15 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mediezytech_task/application/radio/radio_bloc.dart';
 import 'package:mediezytech_task/application/register/register_bloc.dart';
 import 'package:mediezytech_task/core/colors.dart';
+import 'package:mediezytech_task/infrastructure/core/token/token.dart';
 import 'package:mediezytech_task/presentation/login/login.dart';
 import 'package:mediezytech_task/widget/custom_form.dart';
 import 'package:mediezytech_task/presentation/register/widget/radio_button.dart';
@@ -120,7 +124,7 @@ class Register extends StatelessWidget {
                       ),
                       CustomFormfeld(
                           controller: passwordController,
-                          textinputType: TextInputType.text,
+                          textinputType: TextInputType.visiblePassword,
                           labelText: "Password",
                           hintText: "Password"),
                       const SizedBox(
@@ -244,6 +248,8 @@ class Register extends StatelessWidget {
                       ),
                       SubmitButton(
                         onTap: () {
+                          
+                         
                           bool isValid = fomkey.currentState!.validate();
                           if (isValid) {
                             BlocProvider.of<RegisterBloc>(context)
@@ -257,12 +263,49 @@ class Register extends StatelessWidget {
                               genter: genter.toString(),
                               dob: pickDate,
                             ));
+                            // String? token =
+                            //     GetLocalStorage.getUserIdAndToken('token');
+                            // print(token ?? "toekn Null");
+final storage = GetStorage();
+                          String? tok = storage.read('tok');
+                          print("$tok ?? message");
+                            Future.delayed(Duration(seconds: 2)).then((value) {
+                              // BlocProvider.of<RegisterBloc>(context)
+                              //     .add(RegisterEvent.started(
+                              //   name: firstNmaeController.text,
+                              //   secondNmae: secondNameController.text,
+                              //   email: emailController.text,
+                              //   mobile: mobileController.text,
+                              //   password: passwordController.text,
+                              //   location: locationController.text,
+                              //   genter: genter.toString(),
+                              //   dob: pickDate,
+                              // ));
+                         return     Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Login(),
+                                  ));
+                            });
 
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Login(),
-                                ));
+                            // if (state.model!.message ==
+                            //     "Email already exists.") {
+                            //   print("object exust");
+                            // } else {
+                            // ScaffoldMessenger.of(context).showSnackBar(
+                            //   SnackBar(
+                            //     content: Text(
+                            //       'Email already exists.',
+                            //     ),
+                            //   ),
+                            // );
+                            // }
+
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //       builder: (context) => Login(),
+                            //     ))
                           }
                         },
                         loding: state.isloding,

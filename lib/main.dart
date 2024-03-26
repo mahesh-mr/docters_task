@@ -26,7 +26,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    String? token = GetLocalStorage.getUserIdAndToken("token");
+    final storage = GetStorage();
+    String? tok = storage.read('tok');
     return MultiBlocProvider(
         providers: [
           BlocProvider(
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
             useMaterial3: true,
           ),
           debugShowCheckedModeBanner: false,
-          home: token == null ? Login() : Doctor(),
+          home: Login() ,
         ));
   }
 }

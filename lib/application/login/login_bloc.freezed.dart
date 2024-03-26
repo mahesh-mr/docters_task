@@ -18,19 +18,21 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$LoginEvent {
   String get email => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
+  BuildContext get ctx => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String email, String password) started,
+    required TResult Function(String email, String password, BuildContext ctx)
+        started,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String email, String password)? started,
+    TResult? Function(String email, String password, BuildContext ctx)? started,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String email, String password)? started,
+    TResult Function(String email, String password, BuildContext ctx)? started,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -62,7 +64,7 @@ abstract class $LoginEventCopyWith<$Res> {
           LoginEvent value, $Res Function(LoginEvent) then) =
       _$LoginEventCopyWithImpl<$Res, LoginEvent>;
   @useResult
-  $Res call({String email, String password});
+  $Res call({String email, String password, BuildContext ctx});
 }
 
 /// @nodoc
@@ -80,6 +82,7 @@ class _$LoginEventCopyWithImpl<$Res, $Val extends LoginEvent>
   $Res call({
     Object? email = null,
     Object? password = null,
+    Object? ctx = null,
   }) {
     return _then(_value.copyWith(
       email: null == email
@@ -90,6 +93,10 @@ class _$LoginEventCopyWithImpl<$Res, $Val extends LoginEvent>
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
+      ctx: null == ctx
+          ? _value.ctx
+          : ctx // ignore: cast_nullable_to_non_nullable
+              as BuildContext,
     ) as $Val);
   }
 }
@@ -102,7 +109,7 @@ abstract class _$$StartedImplCopyWith<$Res>
       __$$StartedImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String email, String password});
+  $Res call({String email, String password, BuildContext ctx});
 }
 
 /// @nodoc
@@ -118,6 +125,7 @@ class __$$StartedImplCopyWithImpl<$Res>
   $Res call({
     Object? email = null,
     Object? password = null,
+    Object? ctx = null,
   }) {
     return _then(_$StartedImpl(
       email: null == email
@@ -128,6 +136,10 @@ class __$$StartedImplCopyWithImpl<$Res>
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
+      ctx: null == ctx
+          ? _value.ctx
+          : ctx // ignore: cast_nullable_to_non_nullable
+              as BuildContext,
     ));
   }
 }
@@ -135,16 +147,19 @@ class __$$StartedImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$StartedImpl implements _Started {
-  const _$StartedImpl({required this.email, required this.password});
+  const _$StartedImpl(
+      {required this.email, required this.password, required this.ctx});
 
   @override
   final String email;
   @override
   final String password;
+  @override
+  final BuildContext ctx;
 
   @override
   String toString() {
-    return 'LoginEvent.started(email: $email, password: $password)';
+    return 'LoginEvent.started(email: $email, password: $password, ctx: $ctx)';
   }
 
   @override
@@ -154,11 +169,12 @@ class _$StartedImpl implements _Started {
             other is _$StartedImpl &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.password, password) ||
-                other.password == password));
+                other.password == password) &&
+            (identical(other.ctx, ctx) || other.ctx == ctx));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, email, password);
+  int get hashCode => Object.hash(runtimeType, email, password, ctx);
 
   @JsonKey(ignore: true)
   @override
@@ -169,27 +185,28 @@ class _$StartedImpl implements _Started {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String email, String password) started,
+    required TResult Function(String email, String password, BuildContext ctx)
+        started,
   }) {
-    return started(email, password);
+    return started(email, password, ctx);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String email, String password)? started,
+    TResult? Function(String email, String password, BuildContext ctx)? started,
   }) {
-    return started?.call(email, password);
+    return started?.call(email, password, ctx);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String email, String password)? started,
+    TResult Function(String email, String password, BuildContext ctx)? started,
     required TResult orElse(),
   }) {
     if (started != null) {
-      return started(email, password);
+      return started(email, password, ctx);
     }
     return orElse();
   }
@@ -226,12 +243,15 @@ class _$StartedImpl implements _Started {
 abstract class _Started implements LoginEvent {
   const factory _Started(
       {required final String email,
-      required final String password}) = _$StartedImpl;
+      required final String password,
+      required final BuildContext ctx}) = _$StartedImpl;
 
   @override
   String get email;
   @override
   String get password;
+  @override
+  BuildContext get ctx;
   @override
   @JsonKey(ignore: true)
   _$$StartedImplCopyWith<_$StartedImpl> get copyWith =>

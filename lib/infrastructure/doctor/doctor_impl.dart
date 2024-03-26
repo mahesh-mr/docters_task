@@ -17,10 +17,12 @@ class DoctorRepository implements DoctorRepo {
   Future<Either<MainFailure, List<AllDoctor>>> getdoctersData() async {
     String? token = GetLocalStorage.getUserIdAndToken('token');
     print("token : $token");
+
+   // token ?? "1187|ngjREq4FbBAFk3t1TIKaPBKhrHJcREZ2RmvQeLXUfd725472";
     try {
       var response = await Dio(BaseOptions(
         headers: {'Authorization': 'Bearer $token'},
-        //contentType: 'application/x-www-form-urlencoded',
+        contentType: 'application/x-www-form-urlencoded',
       )).get(
         ApiEndPoints.allDoctor,
       );
